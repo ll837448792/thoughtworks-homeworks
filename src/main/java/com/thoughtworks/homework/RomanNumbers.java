@@ -8,7 +8,48 @@ package com.thoughtworks.homework;
  **/
 
 public enum RomanNumbers {
-    i("i", 1), v("v", 5), x("x", 10), l("l", 50), c("c", 100), d("d", 500), m("m", 1000);
+
+    /**
+     * Symbol Value
+     * I        1
+     */
+    I("I", 1),
+
+    /**
+     * Symbol Value
+     * V        5
+     */
+    V("V", 5),
+
+    /**
+     * Symbol Value
+     * X        10
+     */
+    X("X", 10),
+
+    /**
+     * Symbol Value
+     * L       50
+     */
+    L("L", 50),
+
+    /**
+     * Symbol Value
+     * C       100
+     */
+    C("C", 100),
+
+    /**
+     * Symbol Value
+     * D       500
+     */
+    D("D", 500),
+
+    /**
+     * Symbol Value
+     * M       1000
+     */
+    M("M", 1000);
 
     private int value;
     private String displayValue;
@@ -25,6 +66,4 @@ public enum RomanNumbers {
     public String getDisplayValue() {
         return displayValue;
     }
-
-
 }

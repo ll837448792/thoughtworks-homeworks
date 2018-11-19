@@ -1,5 +1,7 @@
 package com.thoughtworks.homework;
 
+import com.thoughtworks.homework.constant.Constant;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,7 +21,7 @@ import java.util.Map;
 
 public class ReadInputAndProcess {
 
-    public static final String NO_IDEA = "I have no idea what you are talking about";
+
 
     private static Map<String, RomanNumbers> interGalacticRomanMapping = new HashMap<>();
     private static Map<String, Double> objectSoldPerUnitValue = new HashMap<>();
@@ -32,15 +34,12 @@ public class ReadInputAndProcess {
     public void readFileAndProcess(String fileName) throws Exception {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
-
             String line;
-
             while ((line = br.readLine()) != null) {
                 processInput(line.trim());
             }
-
         } catch (IOException e) {
-            System.out.println("File not found exception " + e);
+            System.out.println("Input file not found exception " + e);
         } finally {
             if (br != null) {
                 br.close();
@@ -56,26 +55,24 @@ public class ReadInputAndProcess {
      */
     private void processInput(String line) throws Exception {
         //split by whitespace
-        line = line.toLowerCase();
-        String[] inputs = line.split("\\s+");
+        String[] inputs = line.split(" ");
         List<String> inputQuestions = DisplayOutput.inputQuestions;
         List<String> outputValues = DisplayOutput.outputValues;
 
-        if (line.startsWith("how many credits is")) {
+        if (line.startsWith(Constant.HOW_MANY_CREDITS_IS)) {
             inputQuestions.add(line);
             outputValues.add(String.valueOf(generateCreditValue(Arrays.copyOfRange(inputs, 4, inputs.length - 1))));
-        } else if (line.startsWith("how much is")) {
+        } else if (line.startsWith(Constant.HOW_MUCH_IS)) {
             inputQuestions.add(line);
             outputValues.add(String.valueOf(generateGalacticUnitToNumericValue(Arrays.copyOfRange(inputs, 3, inputs.length - 1))));
-        } else if (line.contains("is") && !line.contains("credits")) {
+        } else if (line.contains(Constant.IS) && !line.contains(Constant.CREDITS)) {
             mapInterGalacticToRomanUnits(inputs);
-        } else if (line.contains("is") && line.contains("credits")) {
+        } else if (line.contains(Constant.IS) && line.contains(Constant.CREDITS)) {
             generateObjectSoldPerUnitMap(inputs);
         } else {
             inputQuestions.add(line);
-            outputValues.add(NO_IDEA);
+            outputValues.add(Constant.NO_IDEA);
         }
-
     }
 
     /**
@@ -113,6 +110,7 @@ public class ReadInputAndProcess {
             }
         }
 
+        //example romanNumbers is MMVI
         int value = RomanValidator.validateRoman(romanNumeral.toString());
         if (value == -1) {
             return -1;
@@ -141,7 +139,7 @@ public class ReadInputAndProcess {
                 return -1;
             }
 
-            return RomanValidator.validateRoman(romanNumeral.toString());
+            return RomanValidator.validateRoman(romanNumeral);
         } catch (Exception e) {
             return -1;
         }
@@ -177,9 +175,9 @@ public class ReadInputAndProcess {
         StringBuilder romanNumeral = new StringBuilder();
         int i;
         for (i = 0; i < arr.length; i++) {
-            RomanNumbers romanRunmbers = interGalacticRomanMapping.get(arr[i]);
-            if (romanRunmbers != null) {
-                romanNumeral.append(romanRunmbers.getDisplayValue());
+            RomanNumbers romanNumbers = interGalacticRomanMapping.get(arr[i]);
+            if (romanNumbers != null) {
+                romanNumeral.append(romanNumbers.getDisplayValue());
             } else {
                 break;
             }

@@ -16,19 +16,26 @@ public class RomanValidator {
 
     }
 
-    private static final Set<Character> THREE_TIMES_REPEATED_CHARACTERS = new HashSet<Character>();
-    private static final Set<Character> NOT_SUBTRACTED_CHARACTERS = new HashSet<Character>();
+    /**
+     * The symbols "I", "X", "C", and "M" can be repeated three times in succession, but no more
+     */
+    private static final Set<Character> THREE_TIMES_REPEATED_CHARACTERS = new HashSet<>();
+
+    /**
+     * "V", "L", and "D" can never be subtracted.
+     */
+    private static final Set<Character> NOT_SUBTRACTED_CHARACTERS = new HashSet<>();
 
     static {
-        THREE_TIMES_REPEATED_CHARACTERS.add('i');
-        THREE_TIMES_REPEATED_CHARACTERS.add('x');
-        THREE_TIMES_REPEATED_CHARACTERS.add('c');
-        THREE_TIMES_REPEATED_CHARACTERS.add('m');
+        THREE_TIMES_REPEATED_CHARACTERS.add('I');
+        THREE_TIMES_REPEATED_CHARACTERS.add('X');
+        THREE_TIMES_REPEATED_CHARACTERS.add('C');
+        THREE_TIMES_REPEATED_CHARACTERS.add('M');
 
-        NOT_SUBTRACTED_CHARACTERS.add('v');
-        NOT_SUBTRACTED_CHARACTERS.add('l');
-        NOT_SUBTRACTED_CHARACTERS.add('d');
-        NOT_SUBTRACTED_CHARACTERS.add('m');
+        NOT_SUBTRACTED_CHARACTERS.add('V');
+        NOT_SUBTRACTED_CHARACTERS.add('L');
+        NOT_SUBTRACTED_CHARACTERS.add('D');
+        NOT_SUBTRACTED_CHARACTERS.add('M');
     }
 
     /**
@@ -52,6 +59,7 @@ public class RomanValidator {
             }
             currentCharacterOrdinal = RomanNumbers.valueOf(String.valueOf(currentChar)).ordinal();
 
+            //They may appear four times if the third and fourth are separated by a smaller value, such as XXXIX
             if (currentChar == previousChar && ++characterRepeatCount < 4 && THREE_TIMES_REPEATED_CHARACTERS.contains(currentChar)) {
                 total += currentRomanCharNumericValue;
             } else if (characterRepeatCount > 3) {

@@ -22,6 +22,5 @@ public class BeginMerchantsGuide {
         } catch (Exception e) {
             System.out.println("An exception has been raised, Either due to invalid input or due to reading the file, quiting the program " + e);
         }
-
     }
 }
